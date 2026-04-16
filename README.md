@@ -49,47 +49,41 @@ Please refer to [docs/data.md](docs/data.md) for dataset preparation instruction
 
 ## 📍 Minimal Usage
 
-Here is a minimal example showing how to transfer a set of source keypoints to a target image with MARCO and visualize the predicted keypoints.
+Here is an example showing how to transfer a set of source keypoints to a target image with MARCO.   
+You can also try MARCO directly in our [Colab Demo](https://colab.research.google.com/drive/1EjSwryl2Dure2S3kZFNYDEKFhzoaayqu?usp=sharing) on your own images and keypoints ✨
 
 
-```bash
+```python
 import torch
-from models import build_marco
-from util.visualization import preprocess_data, visualize_prediction
 
-src_path = "assets/images/src_car.jpg"
-trg_path = "assets/images/trg_car.jpg"
-checkpoint_path = "marco_spair.pth"
-output_path = "output_car_pred.png"
+src_path, trg_path = "assets/images/src_car.jpg", "assets/images/trg_car.jpg"
+output_path = "trg_car_pred.png"
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Source keypoints in original image pixel coordinates (x, y)
 src_kps = [[320, 230], [180, 150], [240, 140], 
            [325, 160], [380, 203], [205, 230]]
 
-# Build model
-model = build_marco()
-checkpoint = torch.load(checkpoint_path, map_location='cpu', weights_only=False)
-model.load_state_dict(checkpoint['model'], strict=True)
-model = model.to('cuda') 
+# Load pretrained model from Torch Hub
+model = torch.hub.load("visinf/MARCO", "marco", pretrained=True, trust_repo=True, device=device)
 model.eval()
 
 # Prepare input
-inputs = preprocess_data(src_path, trg_path, src_kps)
+inputs = model.preprocess_data(src_path, trg_path, src_kps, device=device)
 
 # Predict
 with torch.no_grad():
     pred_kps = model(**inputs)
 
 # Visualize
-visualize_prediction(src_path, trg_path, src_kps, pred_kps, output_path)
+model.visualize_prediction(src_path, trg_path, src_kps, pred_kps, output_path)
 ```
+
 An example output is shown below:
 <p align="center">
   <img src="assets/marco_example.png" alt="MARCO teaser">
 </p>
 
-
-You can also try MARCO directly in our [Colab Demo](https://colab.research.google.com/drive/1EjSwryl2Dure2S3kZFNYDEKFhzoaayqu?usp=sharing) on your own images and keypoints ✨
 
 ## 🚀 Inference
 
@@ -109,7 +103,7 @@ We release two pretrained MARCO checkpoints, both based on a **ViT-L/14 DINOv2 b
   </thead>
   <tbody>
     <tr>
-      <td align="left"><a href="#"><code>marco_spair.pth</code></a></td>
+      <td align="left"><a href="https://drive.google.com/file/d/1_of8iQjenTttF5Jld69LNf9M0vnM2Xbx/view?usp=sharing"><code>marco_spair.pth</code></a></td>
       <td align="left">ViT-L/14</td>
       <td align="left">323 M</td>
       <td align="left">—</td>
@@ -118,7 +112,7 @@ We release two pretrained MARCO checkpoints, both based on a **ViT-L/14 DINOv2 b
       <td align="center">67.5</td>
     </tr>
     <tr>
-      <td align="left"><a href="#"><code>marco_ap_spair.pth</code></a></td>
+      <td align="left"><a href="https://drive.google.com/file/d/1d2If4nBUy7SjFberZVuXsFr_zqLXvoU8/view?usp=sharing"><code>marco_ap_spair.pth</code></a></td>
       <td align="left">ViT-L/14</td>
       <td align="left">323 M</td>
       <td align="left">AP-10k</td>
