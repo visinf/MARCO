@@ -2,12 +2,10 @@
 
 import torch
 import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
 from PIL import Image
+import torch.nn.functional as F
 from torchvision import transforms
-
-from datasets.data_utils import resize_longest_side, pad_tensor_no_resize
 
 # ImageNet normalization
 _NORM = transforms.Compose([
@@ -28,6 +26,25 @@ def _get_colors(n: int):
         return _PALETTE[:n]
     cmap = plt.cm.get_cmap('hsv', n)
     return [cmap(i) for i in range(n)]
+
+
+def _resize_longest_side(img_in: Image.Image, out_size: int) -> Image.Image:
+    """Resize an image so its longest side matches ``out_size``."""
+    w, h = img_in.size
+    scale = out_size / max(w, h)
+    new_w, new_h = int(round(w * scale)), int(round(h * scale))
+    return img_in.resize((new_w, new_h), Image.BILINEAR)
+
+
+def _pad_tensor_no_resize(img_tensor: torch.Tensor):
+    """Pad a ``[C, H, W]`` tensor to a square using bottom/right zero padding."""
+    _, h, w = img_tensor.shape
+    target_size = max(h, w)
+    pad_bottom = target_size - h
+    pad_right = target_size - w
+    padding = (0, pad_right, 0, pad_bottom)
+    img_padded = F.pad(img_tensor, padding, mode='constant', value=0)
+    return img_padded, (pad_bottom, pad_right)
 
 
 def preprocess_data(
@@ -86,14 +103,14 @@ def preprocess_data(
         )
 
     # Resize longest side → tensor → pad to square
-    src_resized = resize_longest_side(src_pil, inference_res)
-    trg_resized = resize_longest_side(trg_pil, inference_res)
+    src_resized = _resize_longest_side(src_pil, inference_res)
+    trg_resized = _resize_longest_side(trg_pil, inference_res)
 
     src_tensor = _NORM(src_resized)  # (C, H', W')
     trg_tensor = _NORM(trg_resized)
 
-    src_padded, _ = pad_tensor_no_resize(src_tensor)  # (C, S, S)
-    trg_padded, _ = pad_tensor_no_resize(trg_tensor)
+    src_padded, _ = _pad_tensor_no_resize(src_tensor)  # (C, S, S)
+    trg_padded, _ = _pad_tensor_no_resize(trg_tensor)
 
     H, W = src_padded.shape[-2:]
 
@@ -141,8 +158,8 @@ def visualize_prediction(
     # Resize for display
     orig_w_src, orig_h_src = src_pil.size
     orig_w_trg, orig_h_trg = trg_pil.size
-    src_resized = resize_longest_side(src_pil, inference_res)
-    trg_resized = resize_longest_side(trg_pil, inference_res)
+    src_resized = _resize_longest_side(src_pil, inference_res)
+    trg_resized = _resize_longest_side(trg_pil, inference_res)
 
     disp_w_src, disp_h_src = src_resized.width, src_resized.height
     disp_w_trg, disp_h_trg = trg_resized.width, trg_resized.height
@@ -321,4 +338,3 @@ def visualize_prediction(
         print(f"Saved visualization → {output_path}")
 
     plt.close(fig)
-
