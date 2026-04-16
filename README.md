@@ -1,3 +1,5 @@
+
+
 <div align="center">
 
 # MARCO: Navigating the Unseen Space of Semantic Correspondence
@@ -29,6 +31,8 @@ MARCO learns **generalizable semantic correspondence** from sparse supervision, 
 🌍 **Dense supervision**: from an average of 20 sparse annotated keypoints, we derive thousands of dense correspondences across the object surface  
 📍 **Efficiency**: a single DINOv2 backbone, **3× smaller** and **10× faster** than diffusion-based methods  
 📊 **MP-100 benchmark**: a new testbed for evaluating transfer to novel keypoints and unseen categories
+
+https://github.com/user-attachments/assets/b490585d-27f4-43fc-a807-f0ba09d3f8a4
 
 
 ## Environment
