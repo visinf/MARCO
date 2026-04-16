@@ -1,0 +1,6 @@
+# eval_subset: intra-species | cross-family | cross-species
+eval_subset: intra-species
+data_path: data/ap-10k
+inference_res: 770
+pck_by: image
+use_sam_masks: true  # at training

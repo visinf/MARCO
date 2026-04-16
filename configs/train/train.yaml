@@ -1,0 +1,28 @@
+epochs: 8
+validate: true
+resume_train: ""
+
+lr: 1.0e-4
+weight_decay: 0
+batch_size: 12
+clip_max_norm: 0.1
+train_res: 630
+
+coarse_to_fine:
+  loss_kernel_size: 15
+  loss_kernel_std: 3.5
+  schedule_std: cosine
+  end_sigma: 1
+  warmup_std: 1_000
+  decay_std: 12_000
+
+ema:
+  warmup_epochs: 5
+  start: 0.99
+  end: 0.9995
+  ramp: 0.9
+
+flow:
+  flow_k: 7
+  sample_n_dense: 300
+  weight_dense: 1

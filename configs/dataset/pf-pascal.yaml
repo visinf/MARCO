@@ -1,0 +1,5 @@
+thres: img
+data_path: data/pf-pascal
+inference_res: 770
+pck_by: image
+use_sam_masks: true # at training

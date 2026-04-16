@@ -1,0 +1,5 @@
+output_dir: output
+name_exp: marco
+device: cuda
+seed: 0
+num_workers: 8

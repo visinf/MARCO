@@ -1,0 +1,5 @@
+thres: bbox
+data_path: data/SPair-71k
+inference_res: 770
+pck_by: image
+use_sam_masks: false # at training

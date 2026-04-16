@@ -1,0 +1,5 @@
+model_size: large
+n_upscale: 2
+adaptformer_stages: [15, 24]
+channel_factor: 0.5
+softmax_temp: 10

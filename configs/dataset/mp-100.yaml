@@ -1,0 +1,7 @@
+# eval_subset: clothing | animal_face | animal_body_unseen | furniture | human_body
+eval_subset: furniture
+data_path: data/mp100_all/mp100
+pairs_path: data/mp100_all/pairs
+annotation_path: data/mp100_all/annotations
+inference_res: 770
+pck_by: image

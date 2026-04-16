@@ -1,0 +1,4 @@
+thres: bbox
+data_path: data/SPair-U
+inference_res: 770
+pck_by: image
