@@ -25,7 +25,7 @@
 
 </div>
 
-MARCO learns **generalizable semantic correspondence** from sparse supervision, turning a handful of keypoints into **dense matches** that transfer to **unseen keypoints** and **novel categories**.
+MARCO learns **generalizable semantic correspondence** from sparse supervision:
 
 ✨ **Seen keypoints, unseen keypoints, new categories**: accurate correspondence not only in-domain, but also on novel keypoints and categories never seen during training  
 🌍 **Dense supervision**: from an average of 20 sparse annotated keypoints, we derive thousands of dense correspondences across the object surface  
