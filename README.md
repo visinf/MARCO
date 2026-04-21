@@ -7,7 +7,7 @@
 ✨ **CVPR 2026 Oral** ✨
 
 <p align="center">
-  <a href="ARXIV_LINK"><img src="https://img.shields.io/badge/Paper-arXiv-red?style=flat-square&labelColor=444444" alt="Paper arXiv"></a>
+  <a href="https://arxiv.org/abs/2604.18267"><img src="https://img.shields.io/badge/Paper-arXiv-red?style=flat-square&labelColor=444444" alt="Paper arXiv"></a>
   <a href="https://visinf.github.io/MARCO"><img src="https://img.shields.io/badge/Project-Page-1f6feb?style=flat-square&labelColor=444444" alt="Project Page"></a>
   <a href="docs/data.md#-mp-100"><img src="https://img.shields.io/badge/Benchmark-MP--100-2ea44f?style=flat-square&labelColor=444444" alt="MP-100 Benchmark"></a>
   <a href=https://colab.research.google.com/drive/1EjSwryl2Dure2S3kZFNYDEKFhzoaayqu?usp=sharing><img src="https://img.shields.io/badge/Colab-Demo-f9ab00?style=flat-square&labelColor=444444" alt="Colab Demo"></a>
